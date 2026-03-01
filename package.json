@@ -1,20 +1,21 @@
 {
   "name": "hypex-mova-music",
   "version": "1.0.0",
-  "description": "hyPex & Mova Railway Music Bot",
+  "description": "hyPex & Mova - Railway uyumlu Discord müzik botu (Discord.js v14 + discord-player v6 + Lavalink)",
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
     "start": "node index.js"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=18.20.0"
   },
   "dependencies": {
-    "discord.js": "^14.14.1",
     "@discordjs/voice": "^0.16.1",
     "discord-player": "^6.6.8",
+    "discord.js": "^14.14.1",
     "dotenv": "^16.4.5",
+    "express": "^4.19.2",
     "libsodium-wrappers": "^0.7.13",
     "undici": "^6.13.0"
   }
