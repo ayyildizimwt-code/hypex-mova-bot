@@ -12,7 +12,7 @@ const client = new Client({
 });
 
 const manager = new Manager({
-    nodes [
+    nodes: [
         {
             host process.env.LAVALINK_HOST,
             port process.env.LAVALINK_PORT,
@@ -29,7 +29,7 @@ client.once(ready, () = {
     console.log(hyPex & Mova Music System Aktif!);
     manager.init(client.user.id);
     client.user.setPresence({
-        activities [{ name hyPex & Mova Music, type 2 }],
+        activities: [{ name hyPex & Mova Music, type 2 }],
         status online
     });
 });
@@ -84,3 +84,4 @@ client.on(messageCreate, async (message) = {
 
 
 client.login(process.env.TOKEN);
+
