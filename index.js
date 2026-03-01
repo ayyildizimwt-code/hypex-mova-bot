@@ -13,12 +13,12 @@ const client = new Client({
 
 const manager = new Manager({
     nodes: [
-        {
-            host process.env.LAVALINK_HOST,
-            port process.env.LAVALINK_PORT,
-            password process.env.LAVALINK_PASSWORD
-        }
-    ],
+  {
+    host: process.env.LAVALINK_HOST,
+    port: Number(process.env.LAVALINK_PORT),
+    password: process.env.LAVALINK_PASSWORD
+  }
+],
     send(id, payload) {
         const guild = client.guilds.cache.get(id);
         if (guild) guild.shard.send(payload);
@@ -84,4 +84,5 @@ client.on(messageCreate, async (message) = {
 
 
 client.login(process.env.TOKEN);
+
 
