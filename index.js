@@ -3,7 +3,7 @@ const { Client, GatewayIntentBits } = require(discord.js);
 const { Manager } = require(erela.js);
 
 const client = new Client({
-    intents [
+    intents: [
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildVoiceStates,
         GatewayIntentBits.GuildMessages,
@@ -81,5 +81,6 @@ client.on(messageCreate, async (message) = {
         if (player) player.destroy();
     }
 });
+
 
 client.login(process.env.TOKEN);
