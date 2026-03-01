@@ -25,7 +25,7 @@ const manager = new Manager({
     }
 });
 
-client.once(ready, () = {
+client.once('ready', () => {
     console.log(hyPex & Mova Music System Aktif!);
     manager.init(client.user.id);
     client.user.setPresence({
@@ -84,5 +84,6 @@ client.on(messageCreate, async (message) = {
 
 
 client.login(process.env.TOKEN);
+
 
 
