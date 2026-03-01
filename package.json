@@ -10,8 +10,12 @@
     "node": ">=18"
   },
   "dependencies": {
-    "discord.js": "^14.15.3",
-    "discord-player": "^6.6.9",
-    "dotenv": "^16.4.5"
+  "discord.js": "^14.14.1",
+  "discord-player": "^6.6.8",
+  "dotenv": "^16.4.5",
+  "opusscript": "^0.0.8",
+  "@discordjs/voice": "^0.16.1",
+  "sodium-native": "^4.0.4"
   }
 }
+
