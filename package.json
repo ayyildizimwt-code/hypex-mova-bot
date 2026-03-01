@@ -1,6 +1,7 @@
 {
   "name": "hypex-mova-music",
   "version": "1.0.0",
+  "description": "hyPex & Mova Railway Music Bot",
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
@@ -10,12 +11,11 @@
     "node": ">=18"
   },
   "dependencies": {
-  "discord.js": "^14.14.1",
-  "discord-player": "^6.6.8",
-  "dotenv": "^16.4.5",
-  "opusscript": "^0.0.8",
-  "@discordjs/voice": "^0.16.1",
-  "sodium-native": "^4.0.4"
+    "discord.js": "^14.14.1",
+    "@discordjs/voice": "^0.16.1",
+    "discord-player": "^6.6.8",
+    "dotenv": "^16.4.5",
+    "libsodium-wrappers": "^0.7.13",
+    "undici": "^6.13.0"
   }
 }
-
