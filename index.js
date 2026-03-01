@@ -1,92 +1,65 @@
-require(dotenv).config();
-const { Client, GatewayIntentBits } = require(discord.js);
-const { Manager } = require(erela.js);
+const { Client, GatewayIntentBits } = require("discord.js");
+const { Player } = require("discord-player");
+require("dotenv").config();
 
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildVoiceStates,
         GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.GuildVoiceStates,
         GatewayIntentBits.MessageContent
     ]
 });
 
-const manager = new Manager({
-    nodes: [
-  {
-    host: process.env.LAVALINK_HOST,
-    port: Number(process.env.LAVALINK_PORT),
-    password: process.env.LAVALINK_PASSWORD
-  }
-],
-    send(id, payload) {
-        const guild = client.guilds.cache.get(id);
-        if (guild) guild.shard.send(payload);
-    }
-});
+const player = new Player(client);
 
 client.once("ready", () => {
     console.log("hyPex & Mova Music System Aktif!");
 
     client.user.setPresence({
         activities: [{ name: "hyPex & Mova Music", type: 2 }],
-        status: "online",
+        status: "online"
     });
 });
 
-client.on(raw, (d) = manager.updateVoiceState(d));
+client.on("messageCreate", async (message) => {
+    if (!message.guild || message.author.bot) return;
 
-client.on(messageCreate, async (message) = {
-    if (!message.guild  message.author.bot) return;
+    const prefix = "!";
+    if (!message.content.startsWith(prefix)) return;
 
-    const args = message.content.split( );
-    const cmd = args.shift().toLowerCase();
+    const args = message.content.slice(prefix.length).trim().split(" ");
+    const command = args.shift().toLowerCase();
 
-    if (cmd === !oynat) {
-        if (!message.member.voice.channel)
-            return message.reply(Önce ses kanalına gir!);
+    if (command === "oynat") {
+        const query = args.join(" ");
+        if (!query) return message.reply("Şarkı adı veya link gir!");
 
-        const query = args.join( );
-        if (!query) return;
+        const voiceChannel = message.member.voice.channel;
+        if (!voiceChannel) return message.reply("Ses kanalına gir!");
 
-        let player = manager.players.get(message.guild.id);
-        if (!player) {
-            player = manager.create({
-                guild message.guild.id,
-                voiceChannel message.member.voice.channel.id,
-                textChannel message.channel.id,
-                selfDeafen true
-            });
-            player.connect();
+        const queue = await player.nodes.create(message.guild, {
+            metadata: message.channel
+        });
+
+        if (!queue.connection) await queue.connect(voiceChannel);
+
+        const result = await player.search(query, {
+            requestedBy: message.author
+        });
+
+        if (!result.tracks.length) {
+            return message.reply("Sonuç bulunamadı!");
         }
 
-        const res = await manager.search(query, message.author);
-        if (!res.tracks.length)
-            return message.reply(Sonuç bulunamadı.);
+        queue.addTrack(result.tracks[0]);
 
-        player.queue.add(res.tracks[0]);
-        message.channel.send(`🎵 hyPex & Mova çalıyor ${res.tracks[0].title}`);
+        if (!queue.isPlaying()) {
+            await queue.node.play();
+        }
 
-        if (!player.playing && !player.paused)
-            player.play();
-    }
-
-    if (cmd === !geç) {
-        const player = manager.players.get(message.guild.id);
-        if (player) player.stop();
-    }
-
-    if (cmd === !dur) {
-        const player = manager.players.get(message.guild.id);
-        if (player) player.destroy();
+        message.channel.send(`🎵 Çalınıyor: **${result.tracks[0].title}**`);
     }
 });
 
-
 client.login(process.env.TOKEN);
-
-
-
-
-
-
